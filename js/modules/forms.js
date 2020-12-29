@@ -1,4 +1,5 @@
 import {closeModal, showModal} from './modal';
+import {postData} from '../services/server';
 
 function forms (formSelector , modalTimerId) {
     //Server
@@ -10,18 +11,6 @@ function forms (formSelector , modalTimerId) {
         success : 'Мы свяжемся с вами как можно быстрее!',
         failure : 'Failure'
     };
-
-    async function postData(url, body) {
-     const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-type' : 'application/json'
-            },
-            body: body,
-       });
-
-       return await res.json();
-    }
 
     forms.forEach(form => {
         bindPostData(form);

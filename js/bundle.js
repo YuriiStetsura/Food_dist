@@ -137,6 +137,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+/* harmony import */ var _services_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/server */ "./js/services/server.js");
+
+
 function cards () {
     //Cards
 
@@ -182,17 +185,7 @@ function cards () {
         }
     }
 
-    const getResource = async (url) => {
-        const res = await fetch(url);
-
-        if(!res.ok) {
-            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
-        }
-
-        return await res.json();
-    };
-
-    getResource('http://localhost:3000/menu')
+    (0,_services_server__WEBPACK_IMPORTED_MODULE_0__.getResource)('http://localhost:3000/menu')
         .then(data => {
             data.forEach(({img, alt, title, descr, price}) => {
                 new MenuCards(img, alt, title, descr, price, '.menu .container').render();
@@ -222,6 +215,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./js/modules/modal.js");
+/* harmony import */ var _services_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/server */ "./js/services/server.js");
+
 
 
 function forms (formSelector , modalTimerId) {
@@ -234,18 +229,6 @@ function forms (formSelector , modalTimerId) {
         success : 'Мы свяжемся с вами как можно быстрее!',
         failure : 'Failure'
     };
-
-    async function postData(url, body) {
-     const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-type' : 'application/json'
-            },
-            body: body,
-       });
-
-       return await res.json();
-    }
 
     forms.forEach(form => {
         bindPostData(form);
@@ -266,7 +249,7 @@ function forms (formSelector , modalTimerId) {
             const formData = new FormData(form);
             const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-            postData('http://localhost:3000/requests', json)
+            (0,_services_server__WEBPACK_IMPORTED_MODULE_1__.postData)('http://localhost:3000/requests', json)
             .then(data => {
                 //console.log(data);
                 showThankModal(message.success);
@@ -677,6 +660,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
+
+
+/***/ }),
+
+/***/ "./js/services/server.js":
+/*!*******************************!*\
+  !*** ./js/services/server.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "postData": () => /* binding */ postData,
+/* harmony export */   "getResource": () => /* binding */ getResource
+/* harmony export */ });
+async function postData(url, body) {
+    const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            body: body,
+        });
+
+        return await res.json();
+}
+
+const getResource = async (url) => {
+    const res = await fetch(url);
+
+    if(!res.ok) {
+        throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+    }
+
+    return await res.json();
+};
+
 
 
 
