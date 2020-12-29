@@ -1,4 +1,4 @@
-function cards() {
+function cards () {
     //Cards
 
     class MenuCards {
@@ -60,6 +60,12 @@ function cards() {
             });
         });
 
+    // axios.get('http://localhost:3000/menu')
+    //     .then(data => {
+    //         data.data.forEach(({img, alt, title, descr, price}) => {
+    //                 new MenuCards(img, alt, title, descr, price, '.menu .container').render();
+    //             });
+    //     });
 }
 
-export default cards; 
+export default cards;

@@ -1,59 +1,56 @@
 function timer () {
-    // Timer
+    //timer
 
-    const deadline = '2020-05-11';
+    const deadline = '2020-12-31';
 
-    function getTimeRemaining(endtime) {
+    function getTimeReaming(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
-            days = Math.floor( (t/(1000*60*60*24)) ),
-            seconds = Math.floor( (t/1000) % 60 ),
-            minutes = Math.floor( (t/1000/60) % 60 ),
-            hours = Math.floor( (t/(1000*60*60) % 24) );
+            days = Math.floor(t / (1000 * 60 * 60 * 24)),
+            hours = Math.floor((t / (1000 * 60 * 60)) % 24),
+            minutes = Math.floor((t / 1000 / 60) % 60),
+            seconds = Math.floor((t / 1000) % 60);
 
         return {
-            'total': t,
-            'days': days,
-            'hours': hours,
-            'minutes': minutes,
-            'seconds': seconds
+            total : t,
+            days,
+            hours,
+            minutes,
+            seconds
         };
     }
 
-    function getZero(num){
-        if (num >= 0 && num < 10) { 
-            return '0' + num;
-        } else {
-            return num;
-        }
-    }
-
-    function setClock(selector, endtime) {
-
+    function setClock(selector,endtime) {
         const timer = document.querySelector(selector),
-            days = timer.querySelector("#days"),
+            days = timer.querySelector('#days'),
             hours = timer.querySelector('#hours'),
             minutes = timer.querySelector('#minutes'),
             seconds = timer.querySelector('#seconds'),
-            timeInterval = setInterval(updateClock, 1000);
+            timerID = setInterval(updateClock, 1000);
 
-        updateClock();
+            updateClock();
 
-        function updateClock() {
-            const t = getTimeRemaining(endtime);
-
-            days.innerHTML = getZero(t.days);
-            hours.innerHTML = getZero(t.hours);
-            minutes.innerHTML = getZero(t.minutes);
-            seconds.innerHTML = getZero(t.seconds);
-
-            if (t.total <= 0) {
-                clearInterval(timeInterval);
+        function addZero(num) {
+            if (num < 10 && num >=0){
+                return '0' + num;
+            }
+            else {
+                return num;
             }
         }
+        function updateClock() {
+            const t = getTimeReaming(endtime);
+            if(t.total <= 0) {
+                clearInterval(timerID);
+            }
+            days.innerHTML = addZero(t.days);
+            hours.innerHTML = addZero(t.hours);
+            minutes.innerHTML = addZero(t.minutes);
+            seconds.innerHTML = addZero(t.seconds);
+        }
+
     }
 
-    setClock('.timer', deadline);
-
+    setClock('.timer',deadline);
 }
 
 export default timer;
