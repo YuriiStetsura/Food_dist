@@ -1,9 +1,9 @@
 import {closeModal, showModal} from './modal';
 
-function server (modalTimerId) {
+function forms (formSelector , modalTimerId) {
     //Server
 
-    const forms = document.querySelectorAll('form');
+    const forms = document.querySelectorAll(formSelector);
     
     const message = {
         loading : 'img/form/spinner.svg',
@@ -84,4 +84,4 @@ function server (modalTimerId) {
     }
 }
 
-export default server;
+export default forms;

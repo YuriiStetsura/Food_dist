@@ -1,7 +1,5 @@
-function timer () {
+function timer (timerSelector , deadline) {
     //timer
-
-    const deadline = '2020-12-31';
 
     function getTimeReaming(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -50,7 +48,7 @@ function timer () {
 
     }
 
-    setClock('.timer',deadline);
+    setClock(timerSelector , deadline);
 }
 
 export default timer;
